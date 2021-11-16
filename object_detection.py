@@ -18,11 +18,11 @@ from image_segmentation import *
 num = 113
 
 
-the_play = "/Users/amit/Desktop/Sys_Senior_Project/Offside_Images/" + str(num) + ".jpg"
+the_play = "./Offside_Images/" + str(num) + ".jpg"
 
 
-if not os.path.isdir("/Users/amit/Desktop/Sys_Senior_Project/temp_images"): 
-    main_dir = "/Users/amit/Desktop/Sys_Senior_Project/temp_images"
+if not os.path.isdir("./temp_images"): 
+    main_dir = "./temp_images"
     os.mkdir(main_dir) 
 
 
@@ -160,9 +160,9 @@ for i in range(len(zoom_in)):
     pixel_dict[i] = [0, 0, 0]
     total = 0
     im2 = im1.crop(zoom_in[i])
-    im2.save("/Users/amit/Desktop/Sys_Senior_Project/temp_images/" + str(i) + ".jpg", "jpeg")
-    image_segmentation("/Users/amit/Desktop/Sys_Senior_Project/temp_images/" + str(i) + ".jpg", i)
-    im3 = Image.open(r"/Users/amit/Desktop/Sys_Senior_Project/temp_images/" + str(i) + "out.jpg")
+    im2.save("./temp_images/" + str(i) + ".jpg", "jpeg")
+    image_segmentation("./temp_images/" + str(i) + ".jpg", i)
+    im3 = Image.open("./temp_images/" + str(i) + ".jpg")
     for j in range(im3.size[0]):
         for k in range(im3.size[1]):
             rgb3 = im3.getpixel((j, k))    
@@ -221,4 +221,4 @@ plt.show()
 
 
 
-shutil.rmtree("/Users/amit/Desktop/Sys_Senior_Project/temp_images")
+shutil.rmtree("./temp_images")
