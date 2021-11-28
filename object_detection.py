@@ -12,13 +12,14 @@ from kmeans import *
 import os
 import shutil
 from image_segmentation import *
+import config
 
 
 #num = random.randint(0, 489)
-num = 113
+num = config.num
 
 
-the_play = "/Users/amit/Desktop/Sys_Senior_Project/Offside_Images/" + str(num) + ".jpg"
+the_play = "./Offside_Images/" + str(num) + ".jpg"
 
 
 if not os.path.isdir("/Users/amit/Desktop/Sys_Senior_Project/temp_images"): 
