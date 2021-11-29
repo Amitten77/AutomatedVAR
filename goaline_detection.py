@@ -5,9 +5,10 @@ import torch
 from torch.utils.data import DataLoader
 from torchvision import datasets, transforms
 from torch.autograd import Variable
+from matplotlib import image
 import matplotlib.pyplot as plt
 import matplotlib.patches as patches
-from PIL import Image
+from PIL import Image, ImageDraw
 from kmeans import *
 import os
 import shutil
@@ -15,10 +16,13 @@ from image_segmentation import *
 from line_detection import *
 import config
 import random
+import numpy as np
+import cv2
 
 sys.setrecursionlimit(10**6)
 #num = random.randint(0, 489)
 num = config.num
+goal_facing = "RIGHT" #Hard-coded for now, change later
 
 the_play_initial = Image.open(r"./Offside_Images/" + str(num) + ".jpg")
 
@@ -87,10 +91,87 @@ for i in range(lines.size[0]):
             fill(0, lines, i, j, len(linesets)-1, color)
 
 
-lines.show()
+
+lines.save("./temp_images/lines.jpg")
+
+longest_lines = []
+potential_goal_lines = []
+avgxs = []
+m_and_b = []
+#lines is our current image with all the lines
+for i in range(len(linesets)):
+    xlis = []
+    ylis = []
+    for j in range(len(linesets[i])):
+        xlis.append(linesets[i][j][0])
+        ylis.append(linesets[i][j][1])
+    x = np.array(xlis)
+    y = np.array(ylis)
+    m, b = np.polyfit(x, y, 1)
+    m_and_b.append((m, b))
+    templines = lines.copy()
+    total_count = 0
+    on_line = 0
+    orix = 0
+    oriy = b
+    x_values = 0
+    while oriy < 0 or oriy > lines.size[1]:
+        oriy += m
+        orix += 1
+    while orix < lines.size[0] and oriy < lines.size[1]:
+        templines.putpixel((round(orix), round(oriy)), (0, 255, 0))
+        x_values += round(orix)
+        if (round(orix), round(oriy)) in used_coords:
+            on_line += 1
+        total_count += 1
+        orix += 1
+        oriy += m
+    avgxs.append(x_values/total_count)
+    longest_lines.append(on_line/total_count)
+    if on_line/total_count > .5:
+        d1 = ImageDraw.Draw(templines)
+        d1.text((28, 36), str(on_line/total_count), fill=(255, 0, 0))
+        templines.save("./temp_images/templines" + str(i) + ".jpg")
+        potential_goal_lines.append(i)
+
+goal_line = potential_goal_lines[0]
+if goal_facing == "RIGHT":
+    extreme_x = -1
+else:
+    extreme_x = 99999
+if len(potential_goal_lines) > 1:
+    for index in potential_goal_lines:
+        if goal_facing == "RIGHT" and avgxs[index] > extreme_x:
+                extreme_x = avgxs[index]
+                goal_line = index
+        elif goal_facing == "LEFT" and avgxs[index] < extreme_x:
+            extreme_x = avgxs[index]
+            goal_line = index
 
 
-shutil.rmtree("./temp_images")
+
+
+
+actual_image = Image.open(r"./Offside_Images/" + str(num) + ".jpg")
+imagee = actual_image.copy()
+m, b = m_and_b[goal_line]
+orix = 0
+oriy = b
+while oriy < 0 or oriy > imagee.size[1]:
+    oriy += m
+    orix += 1
+while orix < imagee.size[0] and oriy < imagee.size[1]:
+    imagee.putpixel((round(orix), round(oriy)), (255, 0, 0))
+    orix += 1
+    oriy += m
+
+
+imagee.putpixel((0, 0), (255, 0, 0))
+
+imagee.show()
+
+
+#shutil.rmtree("./temp_images")
 
 
 

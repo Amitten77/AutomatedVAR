@@ -17,7 +17,7 @@ import config
 
 #num = random.randint(0, 489)
 num = config.num
-
+goal_facing = "RIGHT" #Hard-coded for now, change later
 
 the_play = "./Offside_Images/" + str(num) + ".jpg"
 
@@ -148,6 +148,18 @@ color_dict["BLUE"] = ((0, 127, 0), (77, 255, 77))
 
 
 
+
+
+x_vals = []
+for i in range(len(zoom_in)):
+    x_vals.append((zoom_in[i][0] + zoom_in[i][2]/2))
+
+
+goalkeeper = x_vals.index(max(x_vals))
+
+print(x_vals, goalkeeper)
+
+sys.exit()
 #Color Approach:
 
 all_detections = []
@@ -157,10 +169,10 @@ error_dict = {}
 pink = (192, 128, 128)
 black = (0, 0, 0)
 standard = (0, 0 , 0)
-for i in range(len(zoom_in)):
+for i in range(len(zoom_in)): #zooms in on each person
     pixel_dict[i] = [0, 0, 0]
     total = 0
-    im2 = im1.crop(zoom_in[i])
+    im2 = im1.crop(zoom_in[i])#crops the picture so it's just the box that selects the person
     im2.save("./temp_images/" + str(i) + ".jpg", "jpeg")
     image_segmentation("./temp_images/" + str(i) + ".jpg", i)
     im3 = Image.open("./temp_images/" + str(i) + ".jpg")

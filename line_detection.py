@@ -9,7 +9,7 @@ import config
 num = config.num
 
 def line_detection(filename):
-    num = 113
+    num = config.num
    # default_file = r"./Offside_Images/" + str(num) + ".jpg"
     # Loads an image
     src = cv.imread(cv.samples.findFile(filename), cv.IMREAD_GRAYSCALE)
@@ -57,6 +57,6 @@ def line_detection(filename):
     return pil_image
 
 
-#num = 113
+
 line_detection("./Offside_Images/" + str(num) + ".jpg")
 
