@@ -41,7 +41,7 @@ for i in range(the_play.size[0]):
             the_play.putpixel((i, j), (0, 0, 0))
         
 
-the_play.show()
+#the_play.show()
 
 rgb_im = the_play.convert("RGB")
 
@@ -50,7 +50,7 @@ rgb_im.save("./temp_images/" + str(num) + "blackandwhite.jpg")
 
 lines = line_detection("./temp_images/" + str(num) + "blackandwhite.jpg")
 
-lines.show()
+#lines.show()
 
 def rgb_mean_distance(rgb1, rgb2):
     r1, g1, b1, = rgb1
@@ -166,12 +166,13 @@ while orix < imagee.size[0] and oriy < imagee.size[1]:
     oriy += m
 
 
-imagee.putpixel((0, 0), (255, 0, 0))
-
-imagee.show()
+print(m, b)
 
 
-#shutil.rmtree("./temp_images")
+#imagee.show()
+
+
+shutil.rmtree("./temp_images")
 
 
 
