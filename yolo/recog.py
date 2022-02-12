@@ -3,10 +3,10 @@ import cv2
 import numpy as np
 import matplotlib.pyplot as plt
 
-yolo = cv2.dnn.readNet("./yolov3-tiny.weights","./yolov3-tiny.cfg")
+yolo = cv2.dnn.readNet(r"C:\Users\Saurav Banerjee\Documents\GitHub\AutomatedVAR\yolo\yolov3-tiny.weights", r"C:\Users\Saurav Banerjee\Documents\GitHub\AutomatedVAR\yolo\yolov3-tiny.cfg")
 classes = []
 
-with open("./coco.names", 'r') as f:
+with open(r"C:\Users\Saurav Banerjee\Documents\GitHub\AutomatedVAR\yolo\coco.names", 'r') as f:
     classes = f.read().splitlines()
 
 img = cv2.imread("falcao.jpg")

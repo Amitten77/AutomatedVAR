@@ -5,14 +5,14 @@ import time
 import cv2
 import os
 
-path_to_input_video = "./Sequences\trimmredtest.mp4"
-path_to_output_video ="./Sequences\Testing"
+path_to_input_video = r"C:\Users\Saurav Banerjee\Documents\GitHub\AutomatedVAR\yolo\Sequences\trimmredtest_.mp4"
+path_to_output_video = r"C:\Users\Saurav Banerjee\Documents\GitHub\AutomatedVAR\yolo\Sequences\output.avi"
 confidence = 0.5 # Minimum probability to filter weak detections
 threshold = 0.3 #Threshold when applying non-maxima supression
 
 
 # load the COCO class labels our YOLO model was trained on
-labelsPath = "coco.names"
+labelsPath = r"C:\Users\Saurav Banerjee\Documents\GitHub\AutomatedVAR\yolo\coco.names"
 LABELS = open(labelsPath).read().strip().split("\n")
 
 # initialize a list of colors to represent each possible class label
@@ -21,8 +21,8 @@ COLORS = np.random.randint(0, 255, size=(len(LABELS), 3),
 	dtype="uint8")
 
 # derive the paths to the YOLO weights and model configuration
-weightsPath = "yolov3.weights"
-configPath = "yolov3.cfg"
+weightsPath = r"C:\Users\Saurav Banerjee\Documents\GitHub\AutomatedVAR\yolo\yolov3.weights"
+configPath = r"C:\Users\Saurav Banerjee\Documents\GitHub\AutomatedVAR\yolo\yolov3.cfg"
 
 # load our YOLO object detector trained on COCO dataset (80 classes)
 # and determine only the *output* layer names that we need from YOLO
