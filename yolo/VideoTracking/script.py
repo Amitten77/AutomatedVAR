@@ -3,21 +3,21 @@ import numpy as np
 
 # Load Yolo
 print("LOADING YOLO")
-net = cv2.dnn.readNet("yolov4-obj_last.weights", "yolov4-obj.cfg")
+net = cv2.dnn.readNet("yolo/VideoTracking/yolov4-obj_last.weights", "yolo/VideoTracking/yolov4-obj.cfg")
 #save all the names in file o the list classes
 classes = []
-with open("obj.names", "r") as f:
+with open("yolo/VideoTracking/obj.names", "r") as f:
     classes = [line.strip() for line in f.readlines()]
 #get layers of the network
 layer_names = net.getLayerNames()
 #Determine the output layer names from the YOLO model 
-output_layers = [layer_names[i - 1] for i in net.getUnconnectedOutLayers()]
+output_layers = [i - 1 for i in net.getUnconnectedOutLayers()]
 print("YOLO LOADED")
 
 
 
 # Capture frame-by-frame
-img = cv2.imread("maxresdefault.jpg")
+img = cv2.imread("yolo/VideoTracking/maxresdefault.jpg")
 #img = cv2.resize(img, None, fx=0.4, fy=0.4)
 height, width, channels = img.shape
 
