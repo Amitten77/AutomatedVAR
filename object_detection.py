@@ -23,8 +23,8 @@ import math
 num = config.num
 goal_facing = "RIGHT" #Hard-coded for now, change later
 
-the_play = "./Offside_Images/" + str(num) + ".jpg"
-
+#the_play = "./Offside_Images/" + str(num) + ".jpg"
+the_play = "./final_frame.jpg"
 
 if not os.path.isdir("./temp_images"): 
     main_dir = "./temp_images"
@@ -36,7 +36,7 @@ config_path='config/yolov3.cfg'
 weights_path='config/yolov3.weights'
 class_path='config/coco.names'
 img_size=416
-conf_thres=0.8
+conf_thres=0.7
 nms_thres=0.4
 # Load model and weights
 model = Darknet(config_path, img_size=img_size)
@@ -113,7 +113,7 @@ plt.axis('off')
 # save image
 plt.savefig(img_path.replace(".jpg", "-det.jpg"),        
                   bbox_inches='tight', pad_inches=0.0)
-#plt.show()
+plt.show()
 
 
 #print(zoom_in)
@@ -255,9 +255,8 @@ for i in range(len(zoom_in)):
                 plt.text(x1, y1, s="Team 2, Player #" + str(i), 
                         color='white', verticalalignment='top',
                         bbox={'color': color, 'pad': 0})
-        
         else:
-            plt.text(x1, y1, s="Goalkeeper", 
+            plt.text(x1, y1, s="Not Sure or Other", 
                     color='white', verticalalignment='top',
                     bbox={'color': color, 'pad': 0})
     
@@ -277,6 +276,8 @@ def draw_line(slope, point, image_string, color, output_image_string):
         x += slope
     y -= 1
     z -= slope
+    y -= 1
+    z -= slope
     while round(y) > 0 and round(z) > 0:
         img.putpixel((round(y), round(z)), color)
         y -= 1
@@ -291,9 +292,9 @@ val = int(input("Enter the player number of the player who recieved the ball?\n"
 point = zoom_in[int(val)]
 point = (point[2], point[3])
 #os.system("python3 goaline_detection.py")
-slope = goaline_detection.m
+slope = (2 * goaline_detection.m + goaline_detection.out_m)/2
 y_intercept = goaline_detection.b
-draw_line(slope, point, "./Offside_Images/" + str(num) + ".jpg", (0, 0, 255), "./thetest.jpg")
+draw_line(slope, point, "./final_frame.jpg", (0, 0, 255), "./thetest.jpg")
 
 def distance_point_to_line(x1, y1, a, b, c):#Ax + By + c = 0
     d = abs(((-a) * x1 + b * y1 - c)) / (math.sqrt(a * a + b * b))
@@ -327,4 +328,4 @@ img.show()
 
 
 
-shutil.rmtree("./temp_images")
+#shutil.rmtree("./temp_images")

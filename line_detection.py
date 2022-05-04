@@ -58,5 +58,5 @@ def line_detection(filename):
 
 
 
-line_detection("./Offside_Images/" + str(num) + ".jpg")
+line_detection("final_frame.jpg")
 

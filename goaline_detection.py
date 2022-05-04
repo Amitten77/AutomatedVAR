@@ -1,3 +1,4 @@
+from black import out
 from models import *
 from utils import *
 import os, sys, time, datetime, random
@@ -24,7 +25,7 @@ sys.setrecursionlimit(10**6)
 num = config.num
 goal_facing = "RIGHT" #Hard-coded for now, change later
 
-the_play_initial = Image.open(r"./Offside_Images/" + str(num) + ".jpg")
+the_play_initial = Image.open("final_frame.jpg")
 
 the_play = the_play_initial.copy()
 
@@ -50,7 +51,7 @@ rgb_im.save("./temp_images/" + str(num) + "blackandwhite.jpg")
 
 lines = line_detection("./temp_images/" + str(num) + "blackandwhite.jpg")
 
-#lines.show()
+lines.show()
 
 def rgb_mean_distance(rgb1, rgb2):
     r1, g1, b1, = rgb1
@@ -128,19 +129,37 @@ for i in range(len(linesets)):
         oriy += m
     avgxs.append(x_values/total_count)
     longest_lines.append(on_line/total_count)
-    if on_line/total_count > .5:
+    if on_line/total_count > .4:
         d1 = ImageDraw.Draw(templines)
         d1.text((28, 36), str(on_line/total_count), fill=(255, 0, 0))
         templines.save("./temp_images/templines" + str(i) + ".jpg")
         potential_goal_lines.append(i)
 
-goal_line = potential_goal_lines[0]
+
+
+def distance_point_to_line(x1, y1, a, b, c):#Ax + By + c = 0
+    d = abs(((-a) * x1 + b * y1 - c)) / (math.sqrt(a * a + b * b))
+    return d
+
+corner = 0
+if goal_facing == "RIGHT":
+    corner = [lines.size[0], 0]
+else:
+    corner = [0, lines.size[1]]
+
+
+print(potential_goal_lines)
+goal_line = potential_goal_lines[-2]
+print(goal_line)
+'''
 if goal_facing == "RIGHT":
     extreme_x = -1
 else:
     extreme_x = 99999
 if len(potential_goal_lines) > 1:
     for index in potential_goal_lines:
+        the_image = Image.open(r"./temp_images/templines" + str(index) + ".jpg")
+        the_image.show()
         if goal_facing == "RIGHT" and avgxs[index] > extreme_x:
                 extreme_x = avgxs[index]
                 goal_line = index
@@ -148,15 +167,30 @@ if len(potential_goal_lines) > 1:
             extreme_x = avgxs[index]
             goal_line = index
 
+min_distance = 99999999
+max_distance = -3
+outer_box_line = potential_goal_lines[1]
+if len(potential_goal_lines) > 1:
+    for index in potential_goal_lines:
+        dist = distance_point_to_line(corner[0], corner[1], m_and_b[index][0], 1, m_and_b[index][1])
+        if dist < min_distance:
+            min_distance = dist
+            goal_line = index
+        if dist > max_distance:
+            max_distance = dist
+            outer_box_line = index
+'''
+outer_box_line = goal_line        
+
+out_m, out_b = m_and_b[outer_box_line]
 
 
-
-
-actual_image = Image.open(r"./Offside_Images/" + str(num) + ".jpg")
+actual_image = Image.open("final_frame.jpg")
 imagee = actual_image.copy()
 m, b = m_and_b[goal_line]
 orix = 0
 oriy = b
+
 while oriy < 0 or oriy > imagee.size[1]:
     oriy += m
     orix += 1
@@ -167,12 +201,27 @@ while orix < imagee.size[0] and oriy < imagee.size[1]:
 
 
 print(m, b)
+print(actual_image.size)
+
+'''
+if goal_facing == "RIGHT":
+    m += 299000/(imagee.size[0]*imagee.size[1])
+else:
+    m -= 299000/(imagee.size[0]*imagee.size[1])
+a = 10
+b = 400
+while a < imagee.size[0] and oriy < imagee.size[1]:
+    imagee.putpixel((round(a), round(b)), (255, 0, 0))
+    a += 1
+    b += m
+'''
 
 
-#imagee.show()
+
+imagee.show()
 
 
-shutil.rmtree("./temp_images")
+#shutil.rmtree("./temp_images")
 
 
 
