@@ -4,6 +4,15 @@ YouTube video of our presentation: https://www.youtube.com/watch?v=HZvvLW67gfk&t
 
 ## What is this project and why does Automated VAR matter?
 
+
+
+
+
+
+
+
+
+
 ## What is the novelty in our project?
 
   For many testcases, we have automated more of the VAR process than ever before:
@@ -17,7 +26,20 @@ YouTube video of our presentation: https://www.youtube.com/watch?v=HZvvLW67gfk&t
 
 ### Step 2: Seperating Players by team
 
+#### Why did we do this?
+
+#### What did we try?
+
+#### What did we end up actually doing?
+
+
 ### Step 3: What two players are in contention for offsides?
+
+#### Why did we do this?
+
+#### What did we try?
+
+#### What did we end up actually doing?
 
 
 ### Step 4: Identifying the Goal-line
@@ -30,6 +52,13 @@ YouTube video of our presentation: https://www.youtube.com/watch?v=HZvvLW67gfk&t
 #### What did we end up actually doing?
 
 ### Step 5: Drawing the Lines
+
+#### Why did we do this?
+- To figure out whether the attacker is offsides, we need to see whether he is in front of the last defender of the other team.
+
+#### What did we try?
+
+#### What did we end up actually doing?
 
 
 ### Future Work/Limitations
