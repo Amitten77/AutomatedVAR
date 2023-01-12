@@ -1,0 +1,7 @@
+filename,file_size,file_attributes,region_count,region_id,region_shape_attributes,region_attributes
+frame0.jpg,160857,"{}",1,0,"{""name"":""rect"",""x"":574,""y"":183,""width"":22,""height"":23}","{""Ball"":""ball\n""}"
+frame30.jpg,173225,"{}",1,0,"{""name"":""rect"",""x"":474,""y"":173,""width"":28,""height"":26}","{""Ball"":""ball\n\n""}"
+frame60.jpg,190240,"{}",1,0,"{""name"":""rect"",""x"":396,""y"":178,""width"":19,""height"":24}","{""Ball"":""ball\n\n\n""}"
+frame90.jpg,199786,"{}",1,0,"{""name"":""rect"",""x"":388,""y"":199,""width"":22,""height"":19}","{""Ball"":""ball\n""}"
+frame120.jpg,202946,"{}",1,0,"{""name"":""rect"",""x"":356,""y"":209,""width"":23,""height"":32}","{""Ball"":""ball\n\n\n""}"
+frame150.jpg,210343,"{}",1,0,"{""name"":""rect"",""x"":338,""y"":222,""width"":39,""height"":34}","{""Ball"":""""}"
